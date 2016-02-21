@@ -23,15 +23,29 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="RushAppDBModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+          <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="UniversityID" ColumnName="UniversityID" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="Major" ColumnName="Major" />
           <ScalarProperty Name="GPA" ColumnName="GPA" />
           <ScalarProperty Name="Hometown" ColumnName="Hometown" />
           <ScalarProperty Name="HomeState" ColumnName="HomeState" />
           <ScalarProperty Name="GreekID" ColumnName="GreekID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="RushAppDBModel.State">
+        <MappingFragment StoreEntitySet="States">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/font-awesome.min.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -11,6 +13,10 @@
 <body style="padding-top:0px;">
     @Html.Partial("_Header")
     <div class="container body-content">
+
+        @*  Url is in CSS file *@
+        <div class="background-image" style="z-index:-1;"></div>
+
         @RenderBody()
         <hr />
         <footer>

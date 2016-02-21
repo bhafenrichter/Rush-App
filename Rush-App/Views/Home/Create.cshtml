@@ -1,0 +1,93 @@
+﻿@model Rush_App.Models.CreateViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<style type="text/css">
+    input, select{
+        max-width:100%;
+    }
+</style>
+
+<h2>Create</h2>
+
+<div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        <div class="col-lg-8">
+
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default" style="margin:auto;">
+                <div class="panel-body" style="margin:auto; width:75%;">
+                    @using (Html.BeginForm())
+                    {
+                        <h2 style="text-align:center;">Create Account</h2>
+                        <div id="accountInfo">
+                            <div class="form-group">
+                                <i class="fa-battery-full"></i>
+                                @Html.TextBoxFor(x => x.User.Email, "", new { @class = "form-control input-lg", @placeholder = "Email Address", @style = "width:100%;" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.User.Password, "", new { @class = "form-control input-lg", @placeholder = "Password" })
+                            </div>
+                            <div class="form-group">
+                                @Html.TextBox("confirmPassword", "", new { @class = "form-control input-lg", @placeholder = "Confirm Password" })
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownListFor(x => x.User.University, new SelectList(Model.Universities, "ID", "Name"), "Select University", new { @class = "form-control" })
+                            </div>
+
+                            
+                        </div>
+                       <div id="personalInfo" style="display:none;">
+                           <div class="form-group">
+                               @Html.TextBoxFor(x => x.User.FirstName, "", new { @class = "form-control input-lg", @placeholder = "First Name" })
+                           </div>
+                           <div class="form-group">
+                               @Html.TextBoxFor(x => x.User.lastName, "", new { @class = "form-control input-lg", @placeholder = "Last Name" })
+                           </div>
+                           <div class="form-group">
+                               @Html.TextBoxFor(x => x.User.GPA, "", new { @class = "form-control input-lg", @placeholder = "High School GPA" })
+                           </div>
+                           <div class="form-group">
+                               @Html.TextBoxFor(x => x.User.Major, "", new { @class = "form-control input-lg", @placeholder = "Major" })
+                           </div>
+                           <div class="form-group">
+                               @Html.TextBoxFor(x => x.User.Hometown, "", new { @class = "form-control input-lg", @placeholder = "Hometown" })
+                           </div>
+                           <div class="form-group">
+                               @Html.DropDownListFor(x => x.User.HomeState, new SelectList(Model.States, "Abbreviation", "Name"), "Select State", new { @class = "form-control input-lg" })
+                           </div>
+                       </div>
+                    }
+                    <div class="form-group">
+                        <button id="transitionButton" type="button" class="btn btn-success btn-lg" onclick="showStudentInfo()" style="width:100%;">Next</button>
+                        <input id="submitButton" type="submit" class="btn btn-success btn-lg" style="width:100%; display:none;" />
+                        <button onclick="showAccountInfo()" class="btn btn-default btn-lg" type="button" style="width:100%;">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    function showStudentInfo() {
+        $("#accountInfo").fadeOut(250);
+        $("#transitionButton").fadeOut(250);
+        setTimeout(function () {
+            $("#personalInfo").fadeIn(250);
+            $("#submitButton").fadeIn(250);
+        }, 300);
+    }
+
+    function showAccountInfo() {
+        $("#personalInfo").fadeOut(250);
+        $("#submitButton").fadeOut(250);
+        setTimeout(function () {
+            $("#accountInfo").fadeIn(250);
+            $("#transitionButton").fadeIn(250);
+        }, 300);
+    }
+</script>

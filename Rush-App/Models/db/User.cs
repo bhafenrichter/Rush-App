@@ -17,12 +17,17 @@ namespace Rush_App.Models.db
         public int ID { get; set; }
         public int UniversityID { get; set; }
         public string FirstName { get; set; }
-        public string lastName { get; set; }
         public string Major { get; set; }
         public Nullable<double> GPA { get; set; }
         public string Hometown { get; set; }
         public string HomeState { get; set; }
         public Nullable<int> GreekID { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string LastName { get; set; }
+        public string Year { get; set; }
+        public string Facebook { get; set; }
+        public string Twitter { get; set; }
     
         public virtual House House { get; set; }
         public virtual University University { get; set; }

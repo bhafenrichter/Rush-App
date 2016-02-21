@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RushAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RushAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="House">
           <Key>
             <PropertyRef Name="ID" />
@@ -14,6 +14,14 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="YearFounded" Type="int" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Abbreviation" Type="varchar" MaxLength="50" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="University">
           <Key>
@@ -27,14 +35,19 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UniversityID" Type="int" Nullable="false" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
           <Property Name="Major" Type="nvarchar" MaxLength="50" />
           <Property Name="GPA" Type="float" />
           <Property Name="Hometown" Type="nvarchar" MaxLength="50" />
           <Property Name="HomeState" Type="nvarchar" MaxLength="2" />
           <Property Name="GreekID" Type="int" />
+          <Property Name="Year" Type="nvarchar" MaxLength="15" />
+          <Property Name="Facebook" Type="nvarchar" MaxLength="250" />
+          <Property Name="Twitter" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <Association Name="FK_User_House">
           <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -62,6 +75,7 @@
         </Association>
         <EntityContainer Name="RushAppDBModelStoreContainer">
           <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="University" EntityType="Self.University" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_User_House" Association="Self.FK_User_House">
@@ -73,8 +87,7 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RushAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -104,7 +117,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UniversityID" Type="Int32" Nullable="false" />
           <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GPA" Type="Double" />
           <Property Name="Hometown" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -112,6 +124,12 @@
           <Property Name="GreekID" Type="Int32" />
           <NavigationProperty Name="House" Relationship="Self.FK_User_House" FromRole="User" ToRole="House" />
           <NavigationProperty Name="University" Relationship="Self.FK_User_University" FromRole="User" ToRole="University" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Facebook" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Twitter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_User_House">
           <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -149,7 +167,16 @@
             <End Role="University" EntitySet="Universities" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="States" EntityType="RushAppDBModel.State" />
         </EntityContainer>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Abbreviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -178,15 +205,29 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="RushAppDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Twitter" ColumnName="Twitter" />
+                <ScalarProperty Name="Facebook" ColumnName="Facebook" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UniversityID" ColumnName="UniversityID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="Major" ColumnName="Major" />
                 <ScalarProperty Name="GPA" ColumnName="GPA" />
                 <ScalarProperty Name="Hometown" ColumnName="Hometown" />
                 <ScalarProperty Name="HomeState" ColumnName="HomeState" />
                 <ScalarProperty Name="GreekID" ColumnName="GreekID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="RushAppDBModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

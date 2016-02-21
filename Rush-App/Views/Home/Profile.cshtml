@@ -1,0 +1,62 @@
+﻿@model Rush_App.Models.ProfileViewModel
+@{
+    ViewBag.Title = "Profile";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="panel panel-default col-md-8" style="margin:auto;">
+        <div class="panel-body">
+            <div class="base-info" style="text-align:center;">
+                <img src="https://scontent-atl3-1.xx.fbcdn.net/hprofile-xpt1/v/t1.0-1/p40x40/12191494_10208107295821175_3986150796179064957_n.jpg?oh=f43eb642bcf6715a56f46182e1770ced&oe=57593265" style="width:250px; height:250px; border-radius:150px;" />
+                <div id="social-media" class="pull-right" style="position:absolute; top:15px; right:15px;">
+                    <ul style="list-style:none;">
+                        <li>
+                            @if (Model.User.Facebook != null)
+                            {
+                                <a href="@Model.User.Facebook" class="btn btn-success" style="width:100px;" target="_blank"><i class="fa fa-facebook"></i> Facebook</a>
+                            }
+                        </li>
+                        <li>
+                            @if (Model.User.Twitter != null)
+                            {
+                                <a href="@Model.User.Twitter" class="btn btn-default" style="width:100px;" target="_blank"><i class="fa fa-twitter"></i> Twitter</a>
+                            }
+                        </li>
+                    </ul>
+                   
+                    
+                </div>
+                
+                
+                <h2>@Model.User.FirstName @Model.User.LastName</h2>
+                <h4>@Model.User.Hometown, @Model.User.HomeState</h4>
+            </div>
+            <div class="row" style="text-align:center;">
+                <div class="col-md-4">
+                    <fieldset>
+                        <legend>Education</legend>
+                        <h2>@Model.User.University.Name</h2>
+                        <h4>@Model.User.Year</h4>
+                    </fieldset>
+                    
+                </div>
+                <div class="col-md-4">
+                    <fieldset>
+                        <legend>High School</legend>
+                        <h2>@Model.User.GPA</h2>
+                        <h4>GPA</h4>
+                    </fieldset>
+                </div>
+                <div class="col-md-4">
+                    <fieldset>
+                        <legend>Short Bio</legend>
+                        <p>Introduce Yourself. Begin the bio by introducing yourself, and always write in the third person. Education and Credentials.</p>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

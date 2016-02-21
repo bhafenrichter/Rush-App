@@ -28,5 +28,6 @@ namespace Rush_App.Models.db
         public virtual DbSet<House> Houses { get; set; }
         public virtual DbSet<University> Universities { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<State> States { get; set; }
     }
 }

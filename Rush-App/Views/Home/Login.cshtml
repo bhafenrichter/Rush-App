@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<style type="text/css">
+    input, select {
+        max-width: 100%;
+    }
+</style>
+
+<div class="form-horizontal">
+    @using (Html.BeginForm())
+    {
+        <div class="col-lg-8">
+
+        </div>
+        <div class="col-lg-4">
+            <div class="panel panel-default" style="margin:auto;">
+                <div class="panel-body" style="margin:auto; width:75%;">
+                    <h4 style="text-align:center;">Login</h4>
+                    <div class="form-group">
+                        @Html.TextBox("email", "", new { @class = "form-control input-lg", @placeholder = "Email Address" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBox("password", "", new { @class = "form-control input-lg", @placeholder = "Password" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success input-lg" style="width:100%;" value="Login" />
+                        @Html.ActionLink("Create Account", "Create", new { }, new { @class = "btn btn-default input-lg", @style = "width:100%" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+
+    @if(ViewBag.ErrorMessage != null)
+    {
+        <text>alert("@ViewBag.ErrorMessage");</text>
+    }
+
+</script>

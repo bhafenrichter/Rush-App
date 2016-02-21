@@ -10,6 +10,14 @@
     <Property Name="YearFounded" Type="int" />
     <Property Name="Description" Type="nvarchar" MaxLength="500" />
   </EntityType>
+  <EntityType Name="States">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="varchar" MaxLength="50" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
   <EntityType Name="University">
     <Key>
       <PropertyRef Name="ID" />
@@ -22,14 +30,19 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="UniversityID" Type="int" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-    <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
     <Property Name="Major" Type="nvarchar" MaxLength="50" />
     <Property Name="GPA" Type="float" />
     <Property Name="Hometown" Type="nvarchar" MaxLength="50" />
     <Property Name="HomeState" Type="nvarchar" MaxLength="2" />
     <Property Name="GreekID" Type="int" />
+    <Property Name="Year" Type="nvarchar" MaxLength="15" />
+    <Property Name="Facebook" Type="nvarchar" MaxLength="250" />
+    <Property Name="Twitter" Type="nvarchar" MaxLength="250" />
   </EntityType>
   <Association Name="FK_User_House">
     <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -57,6 +70,7 @@
   </Association>
   <EntityContainer Name="RushAppDBModelStoreContainer">
     <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="University" EntityType="Self.University" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_User_House" Association="Self.FK_User_House">

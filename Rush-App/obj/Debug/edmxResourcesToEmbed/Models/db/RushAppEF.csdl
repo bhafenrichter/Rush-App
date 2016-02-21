@@ -26,7 +26,6 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UniversityID" Type="Int32" Nullable="false" />
     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="GPA" Type="Double" />
     <Property Name="Hometown" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -34,6 +33,12 @@
     <Property Name="GreekID" Type="Int32" />
     <NavigationProperty Name="House" Relationship="Self.FK_User_House" FromRole="User" ToRole="House" />
     <NavigationProperty Name="University" Relationship="Self.FK_User_University" FromRole="User" ToRole="University" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Year" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Facebook" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Twitter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_User_House">
     <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -71,5 +76,14 @@
       <End Role="University" EntitySet="Universities" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
+    <EntitySet Name="States" EntityType="RushAppDBModel.State" />
   </EntityContainer>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Abbreviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+  </EntityType>
 </Schema>

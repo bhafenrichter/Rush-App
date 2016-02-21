@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="RushAppDBModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="RushAppDBModel.FK_User_House" ManuallyRouted="false" />
         <AssociationConnector Association="RushAppDBModel.FK_User_University" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="RushAppDBModel.State" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
