@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Rush_App.Models.HomeViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -10,22 +12,66 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Calendar</h2>
+
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Rush @DateTime.Now.Year</h2>
+                <ul class="list-group">
+                    @foreach (var rushee in Model.Rushees)
+                    {
+                        <li class="list-group-item">
+                            <h4 class="list-group-item-heading"> @Html.ActionLink(rushee.FirstName + " " + rushee.LastName, "Profile", new { userId = rushee.ID })</h4>
+                            <p class="list-group-item-text">@rushee.Hometown, @rushee.HomeState</p>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    @if (Model.Members != null && Model.Members.Count() > 0)
+    {
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>@Model.User.House.Name</h2>
+                    <ul class="list-group">
+                        @foreach (var members in Model.Members)
+                        {
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading"> @Html.ActionLink(members.FirstName + " " + members.LastName, "Profile", new { userId = members.ID })</h4>
+                                <p class="list-group-item-text">@members.Hometown, @members.HomeState</p>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h2>Houses</h2>
+                    <ul class="list-group">
+                        @foreach (var house in Model.Houses)
+                        {
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading"> @Html.ActionLink(house.Name, "House", new { houseId = house.ID })</h4>
+                                <p class="list-group-item-text">Founded @house.YearFounded</p>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
 </div>

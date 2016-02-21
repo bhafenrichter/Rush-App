@@ -207,6 +207,7 @@
     <Compile Include="Models\db\State.cs">
       <DependentUpon>RushAppEF.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\db\RushAppEF.Context.cs">

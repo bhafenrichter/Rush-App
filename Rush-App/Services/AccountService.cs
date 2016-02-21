@@ -42,8 +42,17 @@ namespace Rush_App.Services
             {
                 return entities.Users
                     .Include("University")
+                    .Include("House")
                     .Where(x => x.ID == userid)
                     .FirstOrDefault();
+            }
+        }
+
+        internal static IEnumerable<User> getRusheesForUniversity(int universityId)
+        {
+            using (var entities = new RushAppDBEntities())
+            {
+                return entities.Users.Where(x => x.GreekID == null && x.UniversityID == universityId).ToList();
             }
         }
 
@@ -63,11 +72,11 @@ namespace Rush_App.Services
             };
         }
 
-        public static IEnumerable<User> getUsersForHouse(int universityID, int greekID)
+        public static IEnumerable<User> getUsersForHouse(int greekID)
         {
             using (var entities = new RushAppDBEntities())
             {
-                return entities.Users.Where(x => x.UniversityID == universityID && x.GreekID == greekID).ToList();
+                return entities.Users.Where(x => x.GreekID == greekID).ToList();
             };
         }
     }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Rush_App.Models.db;
+using Rush_App.Models;
+
 namespace Rush_App.Controllers
 {
     public class HomeController : Controller
@@ -37,7 +39,7 @@ namespace Rush_App.Controllers
                 var userCookie = new HttpCookie("UserId", user.ID.ToString());
                 userCookie.Expires.AddDays(1);
                 HttpContext.Response.Cookies.Add(userCookie);
-                return RedirectToAction("User");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -48,19 +50,44 @@ namespace Rush_App.Controllers
 
         public ActionResult Index()
         {
-            if(Request.Cookies["User"] == null) { return View("Login"); }
-            int userid = Int32.Parse(Request.Cookies["User"].Value);
+            if(Request.Cookies["UserId"] == null) { return View("Login"); }
+            int userid = Int32.Parse(Request.Cookies["UserId"].Value);
 
-            return View();
+            var vm = HomeControllerService.getHomeViewModel(userid);
+
+            return View(vm);
         }
 
-        public ActionResult Profile()
+        public ActionResult Profile(int? userid)
         {
-            if (Request.Cookies["User"] == null) { return View("Login"); }
-            int userid = Int32.Parse(Request.Cookies["User"].Value);
-            var vm = HomeControllerService.getProfileViewModel(userid);
+            if (Request.Cookies["UserId"] == null && userid == null) { return View("Login"); }
+            var vm = new ProfileViewModel();
+            if(userid != null)
+            {
+                //viewing someone elses profile
+                vm = HomeControllerService.getProfileViewModel(userid ?? 0);
+            }
+            else
+            {
+                //viewing our own profile
+                int currentUserId = Int32.Parse(Request.Cookies["UserId"].Value);
+                vm = HomeControllerService.getProfileViewModel(currentUserId);
+            }
+
+            
             
             return View(vm);
+        }
+
+        public ActionResult Logout()
+        {
+            if (Request.Cookies["UserId"] != null)
+            {
+                var c = new HttpCookie("UserId");
+                c.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(c);
+            }
+            return RedirectToAction("Login");
         }
     }
 }
