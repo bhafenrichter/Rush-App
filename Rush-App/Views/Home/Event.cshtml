@@ -1,0 +1,43 @@
+﻿@model Rush_App.Models.EventViewModel
+@{
+    ViewBag.Title = "Event";
+}
+
+        <div class="panel panel-default" style="margin:auto;">
+            <div class="panel-body">
+                <h2>@Model.Event.Name</h2>
+                <h4>@Model.Event.Date.Value.ToShortDateString(), @Model.Event.StartTime.Value.ToShortTimeString() - @Model.Event.EndTime.Value.ToShortTimeString()</h4>
+                <p>@Model.Event.Description</p>
+            </div>
+        </div>
+<div class="row" style="margin-top:15px;">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <fieldset>
+                    <legend>Members Attending</legend>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <fieldset>
+                    <legend>Rushees Attending</legend>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+

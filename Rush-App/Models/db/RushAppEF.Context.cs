@@ -29,5 +29,7 @@ namespace Rush_App.Models.db
         public virtual DbSet<University> Universities { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<UserEvent> UserEvents { get; set; }
     }
 }

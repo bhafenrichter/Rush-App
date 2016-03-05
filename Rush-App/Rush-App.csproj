@@ -196,15 +196,23 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\HouseViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CreateViewModel.cs" />
+    <Compile Include="Models\db\Event.cs">
+      <DependentUpon>RushAppEF.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\db\House.cs">
       <DependentUpon>RushAppEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\db\State.cs">
+      <DependentUpon>RushAppEF.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\db\UserEvent.cs">
       <DependentUpon>RushAppEF.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\HomeViewModel.cs" />
@@ -243,6 +251,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\jquery-clockpicker.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -281,6 +290,7 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-clockpicker.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -305,6 +315,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
+    <Content Include="Views\Home\House.cshtml" />
+    <Content Include="Views\Home\Event.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

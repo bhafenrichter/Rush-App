@@ -79,6 +79,29 @@ namespace Rush_App.Controllers
             return View(vm);
         }
 
+        public ActionResult House(int? houseId)
+        {
+            if (Request.Cookies["UserId"] == null) { return View("Login"); }
+
+            int userId = Int32.Parse(Request.Cookies["UserId"].Value);
+            
+            var vm = new HouseViewModel();
+            vm.User = AccountService.getUserById(userId);
+            vm = HomeControllerService.getHouseViewModel(userId, houseId ?? vm.User.GreekID ?? 0);
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult House(Event e)
+        {
+            int userId = Int32.Parse(Request.Cookies["UserId"].Value);
+
+            HomeService.createEvent(e);
+
+            return RedirectToAction("House", new { e.GreekId });
+        }
+
         public ActionResult Logout()
         {
             if (Request.Cookies["UserId"] != null)
@@ -88,6 +111,13 @@ namespace Rush_App.Controllers
                 Response.Cookies.Add(c);
             }
             return RedirectToAction("Login");
+        }
+
+        public ActionResult Event(int ID)
+        {
+            int userId = Int32.Parse(Request.Cookies["UserId"].Value);
+            var vm = HomeControllerService.getEventViewModel(userId, ID);
+            return View(vm);
         }
     }
 }

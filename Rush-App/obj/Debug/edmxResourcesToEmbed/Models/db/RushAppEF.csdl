@@ -10,6 +10,7 @@
     <Property Name="YearFounded" Type="Int32" />
     <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Users" Relationship="Self.FK_User_House" FromRole="House" ToRole="User" />
+    <NavigationProperty Name="Events" Relationship="RushAppDBModel.FK_Event_House" FromRole="House" ToRole="Event" />
   </EntityType>
   <EntityType Name="University">
     <Key>
@@ -39,6 +40,7 @@
     <Property Name="Year" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="Facebook" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Twitter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="UserEvent" Relationship="RushAppDBModel.FK_UserEvent_User" FromRole="User" ToRole="UserEvent" />
   </EntityType>
   <Association Name="FK_User_House">
     <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -77,6 +79,24 @@
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
     <EntitySet Name="States" EntityType="RushAppDBModel.State" />
+    <EntitySet Name="Events" EntityType="RushAppDBModel.Event" />
+    <EntitySet Name="UserEvents" EntityType="RushAppDBModel.UserEvent" />
+    <AssociationSet Name="FK_Event_Event" Association="RushAppDBModel.FK_Event_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="Event1" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_House" Association="RushAppDBModel.FK_Event_House">
+      <End Role="House" EntitySet="Houses" />
+      <End Role="Event" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_Event" Association="RushAppDBModel.FK_UserEvent_Event">
+      <End Role="Event" EntitySet="Events" />
+      <End Role="UserEvent" EntitySet="UserEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_User" Association="RushAppDBModel.FK_UserEvent_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserEvent" EntitySet="UserEvents" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="State">
     <Key>
@@ -86,4 +106,82 @@
     <Property Name="Abbreviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
   </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GreekId" Type="Int32" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="StartTime" Type="DateTime" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Precision="3" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Event1" Relationship="RushAppDBModel.FK_Event_Event" FromRole="Event" ToRole="Event1" />
+    <NavigationProperty Name="Event2" Relationship="RushAppDBModel.FK_Event_Event" FromRole="Event1" ToRole="Event" />
+    <NavigationProperty Name="House" Relationship="RushAppDBModel.FK_Event_House" FromRole="Event" ToRole="House" />
+    <NavigationProperty Name="UserEvents" Relationship="RushAppDBModel.FK_UserEvent_Event" FromRole="Event" ToRole="UserEvent" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="UserEvent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Event" Relationship="RushAppDBModel.FK_UserEvent_Event" FromRole="UserEvent" ToRole="Event" />
+    <NavigationProperty Name="User" Relationship="RushAppDBModel.FK_UserEvent_User" FromRole="UserEvent" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Event_Event">
+    <End Type="RushAppDBModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="RushAppDBModel.Event" Role="Event1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_House">
+    <End Type="RushAppDBModel.House" Role="House" Multiplicity="0..1" />
+    <End Type="RushAppDBModel.Event" Role="Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="House">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="GreekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEvent_Event">
+    <End Type="RushAppDBModel.Event" Role="Event" Multiplicity="1" />
+    <End Type="RushAppDBModel.UserEvent" Role="UserEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEvent_User">
+    <End Type="RushAppDBModel.User" Role="User" Multiplicity="1" />
+    <End Type="RushAppDBModel.UserEvent" Role="UserEvent" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

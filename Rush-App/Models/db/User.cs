@@ -31,5 +31,6 @@ namespace Rush_App.Models.db
     
         public virtual House House { get; set; }
         public virtual University University { get; set; }
+        public virtual UserEvent UserEvent { get; set; }
     }
 }

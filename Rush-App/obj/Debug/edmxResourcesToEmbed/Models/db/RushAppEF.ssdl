@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="RushAppDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GreekId" Type="int" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="text" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zip" Type="nvarchar" MaxLength="10" />
+    <Property Name="State" Type="nvarchar" MaxLength="2" />
+  </EntityType>
   <EntityType Name="House">
     <Key>
       <PropertyRef Name="ID" />
@@ -44,6 +60,38 @@
     <Property Name="Facebook" Type="nvarchar" MaxLength="250" />
     <Property Name="Twitter" Type="nvarchar" MaxLength="250" />
   </EntityType>
+  <EntityType Name="UserEvent">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="EventId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Event_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="Event1" Type="Self.Event" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event1">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_House">
+    <End Role="House" Type="Self.House" Multiplicity="0..1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="House">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="GreekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_House">
     <End Role="House" Type="Self.House" Multiplicity="0..1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -68,11 +116,45 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_UserEvent_Event">
+    <End Role="Event" Type="Self.Event" Multiplicity="1" />
+    <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Event">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="EventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserEvent_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserEvent">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="RushAppDBModelStoreContainer">
+    <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="University" EntityType="Self.University" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserEvent" EntityType="Self.UserEvent" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Event_Event" Association="Self.FK_Event_Event">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="Event1" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_House" Association="Self.FK_Event_House">
+      <End Role="House" EntitySet="House" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
     <AssociationSet Name="FK_User_House" Association="Self.FK_User_House">
       <End Role="House" EntitySet="House" />
       <End Role="User" EntitySet="User" />
@@ -80,6 +162,14 @@
     <AssociationSet Name="FK_User_University" Association="Self.FK_User_University">
       <End Role="University" EntitySet="University" />
       <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_Event" Association="Self.FK_UserEvent_Event">
+      <End Role="Event" EntitySet="Event" />
+      <End Role="UserEvent" EntitySet="UserEvent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserEvent_User" Association="Self.FK_UserEvent_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserEvent" EntitySet="UserEvent" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

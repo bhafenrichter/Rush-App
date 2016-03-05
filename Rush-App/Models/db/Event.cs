@@ -12,24 +12,30 @@ namespace Rush_App.Models.db
     using System;
     using System.Collections.Generic;
     
-    public partial class House
+    public partial class Event
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public House()
+        public Event()
         {
-            this.Users = new HashSet<User>();
-            this.Events = new HashSet<Event>();
+            this.UserEvents = new HashSet<UserEvent>();
         }
     
         public int ID { get; set; }
-        public int UniversityID { get; set; }
+        public Nullable<int> GreekId { get; set; }
         public string Name { get; set; }
-        public Nullable<int> YearFounded { get; set; }
         public string Description { get; set; }
+        public Nullable<System.DateTime> StartTime { get; set; }
+        public Nullable<System.DateTime> EndTime { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Zip { get; set; }
+        public string State { get; set; }
     
+        public virtual Event Event1 { get; set; }
+        public virtual Event Event2 { get; set; }
+        public virtual House House { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<UserEvent> UserEvents { get; set; }
     }
 }
