@@ -12,11 +12,12 @@
         <AssociationConnector Association="RushAppDBModel.FK_User_University" ManuallyRouted="false" />
         <EntityTypeShape EntityType="RushAppDBModel.State" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="RushAppDBModel.Event" Width="1.5" PointX="3" PointY="6.125" />
-        <EntityTypeShape EntityType="RushAppDBModel.UserEvent" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="RushAppDBModel.UserEvent" Width="1.5" PointX="8.875" PointY="5.25" />
         <AssociationConnector Association="RushAppDBModel.FK_Event_Event" />
         <AssociationConnector Association="RushAppDBModel.FK_Event_House" />
         <AssociationConnector Association="RushAppDBModel.FK_UserEvent_Event" />
-        <AssociationConnector Association="RushAppDBModel.FK_UserEvent_User" />
+        <AssociationConnector Association="RushAppDBModel.FK_UserEvent_User1" />
+        <AssociationConnector Association="RushAppDBModel.FK_Event_University" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

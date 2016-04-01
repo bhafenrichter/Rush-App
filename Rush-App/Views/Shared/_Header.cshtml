@@ -1,4 +1,5 @@
-﻿<nav class="navbar navbar-default">
+﻿@model string   
+<nav class="navbar navbar-default">
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -13,11 +14,14 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        @* User is logged in *@
+        @if (Model != null)
+        {
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <img src="https://scontent-atl3-1.xx.fbcdn.net/hprofile-xpt1/v/t1.0-1/p40x40/12191494_10208107295821175_3986150796179064957_n.jpg?oh=f43eb642bcf6715a56f46182e1770ced&oe=57593265" style="width:25px; height:25px; border-radius:10px;" />
-                        Brandon Hafenrichter 
+                        @Model
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -30,12 +34,13 @@
                         <li>
                             @Html.ActionLink("My House", "House", new { })
                         </li>
-                        <li><a href="#">Account Settings</a></li>
                         <li role="separator" class="divider"></li>
                         <li>@Html.ActionLink("Log Out", "Logout", new { }, new { })</li>
                     </ul>
                 </li>
             </ul>
+        }
+            
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

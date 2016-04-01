@@ -6,9 +6,8 @@
 <link rel="stylesheet" href="~/Content/jquery-clockpicker.css" />
 <script type="text/javascript" src="~/Scripts/jquery-clockpicker.js"></script>
 
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="panel panel-default col-md-8" style="margin:auto;">
+<div class="col-md-12">
+    <div class="panel panel-default" style="margin:auto; margin-bottom:30px;">
         <div class="panel-body">
             <div class="base-info" style="text-align:center;">
                 <img src="https://scontent-atl3-1.xx.fbcdn.net/hprofile-xpt1/v/t1.0-1/p40x40/12191494_10208107295821175_3986150796179064957_n.jpg?oh=f43eb642bcf6715a56f46182e1770ced&oe=57593265" style="width:250px; height:250px; border-radius:150px;" />
@@ -16,54 +15,67 @@
                 <h2>@Model.House.Name</h2>
                 <h4>Established @Model.House.YearFounded</h4>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <fieldset>
-                        <legend>Upcoming Events</legend>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                @foreach (var e in Model.Events)
-                                {
-                                    <h4 class="list-group-item-heading">@Html.ActionLink(e.Name, "Event",new { id = e.ID })</h4>
-                                    <p class="list-group-item-text">@e.Date.Value.ToShortDateString(), @e.StartTime.Value.ToShortTimeString() - @e.EndTime.Value.ToShortTimeString()</p>
-                                }
-                            </li>
-                        </ul>
-                        
-                        @if (Model.Events.Count() == 0)
-                        {
-                            <h4>No Events scheduled at this time.</h4>
-                        }
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#events" style="width:100%;">Add an Event</button>
-                    </fieldset>
-                </div>
-                <div class="col-md-4">
-                    <fieldset>
-                        <legend>Officers</legend>
-                        <h2>@Model.User.University.Name</h2>
-                        <h4>@Model.User.Year</h4>
-                    </fieldset>
-
-                </div>
-                <div class="col-md-4">
-                    <fieldset>
-                        <legend>Members</legend>
-                        <ul class="list-group">
-                            @foreach (var member in Model.Members.Take(3))
-                            {
-                                <li class="list-group-item">
-                                    <h4 class="list-group-item-heading">@Html.ActionLink(member.FirstName + " " + member.LastName, "Profile", new { userId = member.ID })</h4>
-                                    <p class="list-group-item-text">@member.Year - @member.Major</p>
-                                </li>
-                            }
-                        </ul>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#members" style="width:100%;">See All Members (@Model.Members.Count())</button>
-                    </fieldset>
-                </div>
-            </div>
         </div>
     </div>
 </div>
+
+
+        <div class="col-md-4">
+            <div class="panel panel-default" style="margin:auto;">
+                <div class="panel-body">
+                    <h2>Calendar</h2>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            @foreach (var e in Model.Events)
+                            {
+                                <h4 class="list-group-item-heading">@Html.ActionLink(e.Name, "Event", new { id = e.ID })</h4>
+
+                                        <p class="list-group-item-text">@e.Date.Value.ToShortDateString(), @e.StartTime.Value.ToShortTimeString() - @e.EndTime.Value.ToShortTimeString()</p>
+                            }
+                        </li>
+                    </ul>
+
+                    @if (Model.Events.Count() == 0)
+                    {
+                        <h4>No Events scheduled at this time.</h4>
+                    }
+                    <div class="btn-group" style="width:100%;">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#events" style="width:50%;">Add an Event</button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#eventsView" style="width:50%;">See All Events</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="panel panel-default" style="margin:auto;">
+                <div class="panel-body">
+                    <h2>Officers</h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+
+            <div class="panel panel-default" style="margin:auto;">
+                <div class="panel-body">
+                    <h2>Members</h2>
+                    <ul class="list-group">
+                        @foreach (var member in Model.Members.Take(3))
+                        {
+                            <li class="list-group-item">
+                                <h4 class="list-group-item-heading">@Html.ActionLink(member.FirstName + " " + member.LastName, "Profile", new { userId = member.ID })</h4>
+                                <p class="list-group-item-text">@member.Year - @member.Major</p>
+                            </li>
+                        }
+                    </ul>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#members" style="width:100%;">See All Members (@Model.Members.Count())</button>
+                </div>
+            </div>
+        </div>
+
+
 
 <div class="modal fade" id="members" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -100,58 +112,58 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Create an Event</h4>
                 </div>
-                <div class="modal-body">
+                        <div class="modal-body">
 
-                    <div class="form-group">
-                        <label class="control-label">Name</label>
-                        @Html.TextBox("Name", "", new { @placeholder = "Event Name", @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Description</label>
-                        @Html.TextArea("Description", "", new { @placeholder = "Event Description", @class = "form-control" })
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Address</label>
-                            @Html.TextBox("Address", "", new { @placeholder = "Address", @class = "form-control" })
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-3" style="padding:0px 0px 0px 15px;">
-                            @Html.TextBox("City", "", new { @placeholder = "City", @class = "form-control" })
-                        </div>
-                        <div class="col-sm-2">
-                            @Html.TextBox("State", "", new { @placeholder = "State", @class = "form-control" })
-                        </div>
-                        <div class="col-sm-2" style="padding:0px 0px 0px 15px;">
-                            @Html.TextBox("Zip", "", new { @placeholder = "Zip", @class = "form-control" })
-                        </div>
-
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <label class="control-label">Date & Time</label>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                @Html.TextBox("Date", "", new { @placeholder = "Start Date", @class = "form-control datepicker" })
+                            <div class="form-group">
+                                <label class="control-label">Name</label>
+                                @Html.TextBox("Name", "", new { @placeholder = "Event Name", @class = "form-control" })
                             </div>
-                        </div>
-                        
-                        <div class="col-sm-3 clockpicker" data-placement="right" data-align="top" data-autoclose="true">
-                            @Html.TextBox("StartTime", "", new { @placeholder = "Start Time", @class = "form-control", value = "09:30" })
-                        </div>
-                        <div class="col-sm-3 clockpicker" data-placement="right" data-align="top" data-autoclose="true">
-                            @Html.TextBox("EndTime", "", new { @placeholder = "End Time", @class = "form-control" })
-                        </div>
-                    </div>
+                            <div class="form-group">
+                                <label class="control-label">Description</label>
+                                @Html.TextArea("Description", "", new { @placeholder = "Event Description", @class = "form-control" })
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Address</label>
+                                    @Html.TextBox("Address", "", new { @placeholder = "Address", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-3" style="padding:0px 0px 0px 15px;">
+                                    @Html.TextBox("City", "", new { @placeholder = "City", @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2">
+                                    @Html.TextBox("State", "", new { @placeholder = "State", @class = "form-control" })
+                                </div>
+                                <div class="col-sm-2" style="padding:0px 0px 0px 15px;">
+                                    @Html.TextBox("Zip", "", new { @placeholder = "Zip", @class = "form-control" })
+                                </div>
 
-                </div>
-                <div class="modal-footer">
-                    <input type="submit" class="btn btn-primary" value="Create Event" />
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Date & Time</label>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        @Html.TextBox("Date", "", new { @placeholder = "Start Date", @class = "form-control datepicker" })
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3 clockpicker" data-placement="right" data-align="top" data-autoclose="true">
+                                    @Html.TextBox("StartTime", "", new { @placeholder = "Start Time", @class = "form-control", value = "09:30" })
+                                </div>
+                                <div class="col-sm-3 clockpicker" data-placement="right" data-align="top" data-autoclose="true">
+                                    @Html.TextBox("EndTime", "", new { @placeholder = "End Time", @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Create Event" />
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
             }
         </div>
     </div>

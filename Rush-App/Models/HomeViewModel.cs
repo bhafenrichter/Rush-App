@@ -13,5 +13,6 @@ namespace Rush_App.Models
         public University University { get; set; }
         public User User { get; set; }
         public IEnumerable<House> Houses { get; set; }
+        public IEnumerable<Event> Events { get; set; }
     }
 }

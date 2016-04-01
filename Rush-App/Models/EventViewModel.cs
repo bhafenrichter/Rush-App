@@ -9,7 +9,8 @@ namespace Rush_App.Models
     public class EventViewModel
     {
         public Event Event { get; set; }
-        public IEnumerable<User> MembersAttending;
-        public IEnumerable<User> RusheesAttending;
+        public IEnumerable<User> UsersAttending { get; set; }
+        public UserEvent UserEvent { get; set; }
+        public User User { get; set; }
     }
 }

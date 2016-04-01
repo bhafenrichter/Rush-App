@@ -15,6 +15,7 @@
     <Property Name="City" Type="nvarchar" MaxLength="50" />
     <Property Name="Zip" Type="nvarchar" MaxLength="10" />
     <Property Name="State" Type="nvarchar" MaxLength="2" />
+    <Property Name="UniversityId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="House">
     <Key>
@@ -67,6 +68,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="EventId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar" MaxLength="25" Nullable="false" />
   </EntityType>
   <Association Name="FK_Event_Event">
     <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -89,6 +91,18 @@
       </Principal>
       <Dependent Role="Event">
         <PropertyRef Name="GreekId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Event_University">
+    <End Role="University" Type="Self.University" Multiplicity="1" />
+    <End Role="Event" Type="Self.Event" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="University">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Event">
+        <PropertyRef Name="UniversityId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -130,13 +144,13 @@
   </Association>
   <Association Name="FK_UserEvent_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
-    <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="0..1" />
+    <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="UserEvent">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -153,6 +167,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Event_House" Association="Self.FK_Event_House">
       <End Role="House" EntitySet="House" />
+      <End Role="Event" EntitySet="Event" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Event_University" Association="Self.FK_Event_University">
+      <End Role="University" EntitySet="University" />
       <End Role="Event" EntitySet="Event" />
     </AssociationSet>
     <AssociationSet Name="FK_User_House" Association="Self.FK_User_House">

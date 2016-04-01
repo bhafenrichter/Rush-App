@@ -20,6 +20,7 @@
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Zip" Type="nvarchar" MaxLength="10" />
           <Property Name="State" Type="nvarchar" MaxLength="2" />
+          <Property Name="UniversityId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="House">
           <Key>
@@ -72,6 +73,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <Association Name="FK_Event_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -94,6 +96,18 @@
             </Principal>
             <Dependent Role="Event">
               <PropertyRef Name="GreekId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_University">
+          <End Role="University" Type="Self.University" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="University">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="UniversityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -135,13 +149,13 @@
         </Association>
         <Association Name="FK_UserEvent_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="0..1" />
+          <End Role="UserEvent" Type="Self.UserEvent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="UserEvent">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -158,6 +172,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Event_House" Association="Self.FK_Event_House">
             <End Role="House" EntitySet="House" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_University" Association="Self.FK_Event_University">
+            <End Role="University" EntitySet="University" />
             <End Role="Event" EntitySet="Event" />
           </AssociationSet>
           <AssociationSet Name="FK_User_House" Association="Self.FK_User_House">
@@ -200,6 +218,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="Self.FK_User_University" FromRole="University" ToRole="User" />
+          <NavigationProperty Name="Events" Relationship="RushAppDBModel.FK_Event_University" FromRole="University" ToRole="Event" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -221,7 +240,7 @@
           <Property Name="Year" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Facebook" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Twitter" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserEvent" Relationship="RushAppDBModel.FK_UserEvent_User" FromRole="User" ToRole="UserEvent" />
+          <NavigationProperty Name="UserEvents" Relationship="RushAppDBModel.FK_UserEvent_User1" FromRole="User" ToRole="UserEvent" />
         </EntityType>
         <Association Name="FK_User_House">
           <End Role="House" Type="Self.House" Multiplicity="0..1" />
@@ -274,9 +293,13 @@
             <End Role="Event" EntitySet="Events" />
             <End Role="UserEvent" EntitySet="UserEvents" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserEvent_User" Association="RushAppDBModel.FK_UserEvent_User">
+          <AssociationSet Name="FK_UserEvent_User1" Association="RushAppDBModel.FK_UserEvent_User1">
             <End Role="User" EntitySet="Users" />
             <End Role="UserEvent" EntitySet="UserEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_University" Association="RushAppDBModel.FK_Event_University">
+            <End Role="University" EntitySet="Universities" />
+            <End Role="Event" EntitySet="Events" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="State">
@@ -306,6 +329,8 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="UniversityId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="University" Relationship="RushAppDBModel.FK_Event_University" FromRole="Event" ToRole="University" />
         </EntityType>
         <EntityType Name="UserEvent">
           <Key>
@@ -315,7 +340,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="EventId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Event" Relationship="RushAppDBModel.FK_UserEvent_Event" FromRole="UserEvent" ToRole="Event" />
-          <NavigationProperty Name="User" Relationship="RushAppDBModel.FK_UserEvent_User" FromRole="UserEvent" ToRole="User" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User1" Relationship="RushAppDBModel.FK_UserEvent_User1" FromRole="UserEvent" ToRole="User" />
         </EntityType>
         <Association Name="FK_Event_Event">
           <End Type="RushAppDBModel.Event" Role="Event" Multiplicity="1" />
@@ -353,15 +379,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserEvent_User">
+        <Association Name="FK_UserEvent_User1">
           <End Type="RushAppDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="RushAppDBModel.UserEvent" Role="UserEvent" Multiplicity="0..1" />
+          <End Type="RushAppDBModel.UserEvent" Role="UserEvent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="UserEvent">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_University">
+          <End Type="RushAppDBModel.University" Role="University" Multiplicity="1" />
+          <End Type="RushAppDBModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="University">
               <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="UniversityId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -422,6 +460,7 @@
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="RushAppDBModel.Event">
               <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="UniversityId" ColumnName="UniversityId" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Zip" ColumnName="Zip" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -439,6 +478,7 @@
           <EntitySetMapping Name="UserEvents">
             <EntityTypeMapping TypeName="RushAppDBModel.UserEvent">
               <MappingFragment StoreEntitySet="UserEvent">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

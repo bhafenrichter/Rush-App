@@ -31,11 +31,13 @@ namespace Rush_App.Models.db
         public string City { get; set; }
         public string Zip { get; set; }
         public string State { get; set; }
+        public int UniversityId { get; set; }
     
         public virtual Event Event1 { get; set; }
         public virtual Event Event2 { get; set; }
         public virtual House House { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserEvent> UserEvents { get; set; }
+        public virtual University University { get; set; }
     }
 }

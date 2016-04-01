@@ -14,6 +14,12 @@ namespace Rush_App.Models.db
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.UserEvents = new HashSet<UserEvent>();
+        }
+    
         public int ID { get; set; }
         public int UniversityID { get; set; }
         public string FirstName { get; set; }
@@ -31,6 +37,7 @@ namespace Rush_App.Models.db
     
         public virtual House House { get; set; }
         public virtual University University { get; set; }
-        public virtual UserEvent UserEvent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserEvent> UserEvents { get; set; }
     }
 }

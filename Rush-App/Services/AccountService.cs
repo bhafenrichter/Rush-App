@@ -79,5 +79,30 @@ namespace Rush_App.Services
                 return entities.Users.Where(x => x.GreekID == greekID).ToList();
             };
         }
+
+        internal static void UpdateUser(User u)
+        {
+            using (var entities = new RushAppDBEntities())
+            {
+                var user = entities.Users.Where(x => x.ID == u.ID).SingleOrDefault();
+                if(user != null)
+                {
+                    //update the user
+                    user.Email = u.Email;
+                    user.Password = u.Password;
+                    user.FirstName = u.FirstName;
+                    user.LastName = u.LastName;
+                    user.Year = u.Year;
+                    user.Major = u.Major;
+                    user.UniversityID = u.UniversityID;
+                    user.GPA = u.GPA;
+                    user.HomeState = u.HomeState;
+                    user.Hometown = u.Hometown;
+                    user.Facebook = u.Facebook;
+                    user.Twitter = u.Twitter;
+                    entities.SaveChanges();
+                }
+            }
+        }
     }
 }

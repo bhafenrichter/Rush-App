@@ -54,7 +54,7 @@ namespace Rush_App.Controllers
             int userid = Int32.Parse(Request.Cookies["UserId"].Value);
 
             var vm = HomeControllerService.getHomeViewModel(userid);
-
+            ViewBag.Name = vm.User.FirstName + " " + vm.User.LastName;
             return View(vm);
         }
 
@@ -74,9 +74,16 @@ namespace Rush_App.Controllers
                 vm = HomeControllerService.getProfileViewModel(currentUserId);
             }
 
-            
-            
+
+            ViewBag.Name = vm.User.FirstName + " " + vm.User.LastName;
             return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult Profile(User u)
+        {
+            AccountService.UpdateUser(u);
+            return RedirectToAction("Profile", u.ID);
         }
 
         public ActionResult House(int? houseId)
@@ -89,6 +96,7 @@ namespace Rush_App.Controllers
             vm.User = AccountService.getUserById(userId);
             vm = HomeControllerService.getHouseViewModel(userId, houseId ?? vm.User.GreekID ?? 0);
 
+            ViewBag.Name = vm.User.FirstName + " " + vm.User.LastName;
             return View(vm);
         }
 
@@ -117,7 +125,14 @@ namespace Rush_App.Controllers
         {
             int userId = Int32.Parse(Request.Cookies["UserId"].Value);
             var vm = HomeControllerService.getEventViewModel(userId, ID);
+            ViewBag.Name = vm.User.FirstName + " " + vm.User.LastName;
             return View(vm);
+        }
+
+        public JsonResult SetAttendance(int eventID, string status)
+        {
+            int userId = Int32.Parse(Request.Cookies["UserId"].Value);
+            return Json(HomeService.setAttendance(userId, eventID, status), JsonRequestBehavior.AllowGet);
         }
     }
 }

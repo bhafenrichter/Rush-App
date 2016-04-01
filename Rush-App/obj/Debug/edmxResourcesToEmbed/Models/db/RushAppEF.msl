@@ -52,6 +52,7 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="RushAppDBModel.Event">
         <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="UniversityId" ColumnName="UniversityId" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="Zip" ColumnName="Zip" />
           <ScalarProperty Name="City" ColumnName="City" />
@@ -69,6 +70,7 @@
     <EntitySetMapping Name="UserEvents">
       <EntityTypeMapping TypeName="RushAppDBModel.UserEvent">
         <MappingFragment StoreEntitySet="UserEvent">
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="EventId" ColumnName="EventId" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ID" ColumnName="ID" />
